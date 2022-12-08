@@ -8,7 +8,7 @@ ties = 0
 games_played = 0
 
 def welcome():
-    print('Welcome to best of 3, Rock, Paper, Scissors! \n')
+    print('Welcome to Rock, Paper, Scissors! This game is a best of 3.\n')
 
 def get_user_choice():
     while True:
