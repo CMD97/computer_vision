@@ -7,7 +7,7 @@ losses = 0
 ties = 0
 games_played = 0
 
-def __init__():
+def welcome():
     print('Welcome to best of 3, Rock, Paper, Scissors! \n')
 
 def get_user_choice():
@@ -46,7 +46,7 @@ ties:   {ties}
 ''')
 
 def play():
-    __init__()
+    welcome()
     while True:
         if games_played != 3 and wins != 2 and losses != 2:
             get_winner()
