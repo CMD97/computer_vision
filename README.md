@@ -41,11 +41,7 @@ The final key function is 'get_winner' this function consisted mainly of a if/el
         print(f'{user_choice} gets beat by {computer_choice}, you lose!')
         losses += 1
         games_played += 1
-    print(f'''
-wins:   {wins}
-losses: {losses}
-ties:   {ties}
-''')
+    print(f''' wins:   {wins}   losses: {losses}    ties:   {ties}''')
 
 If the user tied with the computer it would add +1 to the tie counter, and print out a statement regarding the tie. 
 Under the `elif` statement, it shows which booleans are used to determine if the user beat the computer and add +1 to the wins, as well as adding +1 to games_played.
