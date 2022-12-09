@@ -8,7 +8,7 @@ ties = 0
 games_played = 0
 
 def welcome():
-    print('Welcome to Rock, Paper, Scissors! This game is a best of 3.\n')
+    print('Welcome to Rock, Paper, Scissors! This game is a best of 5.\n')
 
 def get_user_choice():
     while True:
@@ -48,10 +48,18 @@ ties:   {ties}
 def play():
     welcome()
     while True:
-        if games_played != 3 and wins != 2 and losses != 2:
+        if games_played != 5 and wins != 3 and losses != 3:
             get_winner()
-        elif wins == 2:
+        elif wins == 3 and losses == 1:
             print(f'You won! {wins} wins over the computers {losses} win. \n')
+            play_again()
+            break
+        elif wins == 3 and (losses == 2 or losses == 0):
+            print(f'You won! {wins} wins over the computers {losses} wins. \n')
+            play_again()
+            break
+        elif (wins == 2 or wins == 0) and losses == 3:
+            print(f'You lost! {wins} wins over the computers {losses} wins. \n')
             play_again()
             break
         else:
