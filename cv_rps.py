@@ -21,6 +21,8 @@ class RPS:
 
     def get_user_choice(self):
         user_choice = ''
+        countdown = False
+        countdown_first = False
         while True:
             ret, frame = cap.read()
             resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
@@ -31,7 +33,15 @@ class RPS:
             cv2.imshow('frame', frame)
             k = cv2.waitKey(1)
             if k == ord('s'):
-                countdown()
+                countdown = True
+                countdown_first = True
+                start_time = time.time()
+            if countdown is True and countdown_first is True:
+                print('Get your answer ready!')
+            if (time.time() - start_time) == 1:
+                print((time.time() - start_time))
+                countdown_first = False
+            if countdown is True and (time.time() - start_time >= 3):
                 user_index = np.argmax(prediction[0])
                 user_choice = user_options[user_index]
                 print('You chose:', user_choice)
