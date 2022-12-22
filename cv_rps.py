@@ -6,6 +6,7 @@ import time
 model = load_model('keras_model.h5')
 cap = cv2.VideoCapture(0)
 data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
+font = cv2.FONT_HERSHEY_SIMPLEX
 
 class RPS:
     def __init__(self, options, games_played=0, wins=0, losses=0, ties=0):
@@ -21,8 +22,12 @@ class RPS:
 
     def get_user_choice(self):
         user_choice = ''
+    #Flags used for countdown
         countdown = False
         countdown_first = False
+        sec_3 = False
+        sec_2 = False
+        sec_1 = False
         while True:
             ret, frame = cap.read()
             resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
@@ -31,27 +36,41 @@ class RPS:
             data[0] = normalized_image
             prediction = model.predict(data, verbose=0)
             cv2.imshow('frame', frame)
-            k = cv2.waitKey(1)
+            k = cv2.waitKey(1)      #Start of countdown process
             if k == ord('s'):
                 countdown = True
                 countdown_first = True
                 start_time = time.time()
             if countdown is True and countdown_first is True:
                 print('Get your answer ready!')
-            if (time.time() - start_time) == 1:
-                print((time.time() - start_time))
                 countdown_first = False
-            if countdown is True and (time.time() - start_time >= 3):
+                sec_3 = True
+            elif sec_3 is True and (1.9 >= (time.time() - start_time) >= 1):
+                print('3')
+                sec_3 = False
+                sec_2 = True
+            elif sec_2 is True and (2.9 >= (time.time() - start_time) >= 2):
+                print('2')
+                sec_2 = False
+                sec_1 = True
+            elif sec_1 is True and (3.9 >= (time.time() - start_time) >= 3):
+                print('1')
+                sec_1 = False
+            elif countdown is True and (time.time() - start_time >= 4):
                 user_index = np.argmax(prediction[0])
                 user_choice = user_options[user_index]
                 print('You chose:', user_choice)
                 return user_choice
-                
+            else:
+                continue
+
+#Computers random choice      
     def get_computer_choice(computer_choice, options):
         computer_choice = random.choice(options)
         print(f'Computer chose:', computer_choice)
         return computer_choice
 
+#Function for getting winner
     def get_winner(self, user_choice, computer_choice):
         if user_choice == computer_choice:
             print('You both chose the same, it\'s a tie!')
@@ -70,6 +89,7 @@ class RPS:
     ties:   {self.ties}
     ''')
 
+#Collective function for playing the game
 def play(options):
     game = RPS(options, games_played=0)
     while True:
@@ -97,6 +117,7 @@ def play(options):
             play_again()
             break
 
+#Play Again Function
 def play_again():
         while True:
             ask_user_to_play_again = input('Play again? Input Y or N: ').upper()
@@ -116,17 +137,6 @@ def play_again():
                 break
             else: 
                 print('Invalid selection, please choose either Y or N')
-
-def countdown():
-    print('Get your answer ready!')
-    prev = time.time() + 1
-    TIMER = int(4)
-    while TIMER >= 1:
-        cur = time.time()
-        if cur - prev >= 1:
-            prev = cur
-            TIMER = TIMER -1
-            print(TIMER)
 
 if __name__ == '__main__':
     options = ['Rock', 'Paper', 'Scissors']
