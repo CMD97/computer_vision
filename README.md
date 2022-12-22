@@ -96,4 +96,59 @@ At the end of the game, when the `play()` while loop is broken, the user will be
             else: 
                 print('Invalid selection, please choose either Y or N')
 
-# Milestone 4
+## Milestone 4 - Combining the manual version into the camera version
+Once the manual version was complete, the function `get_user_choice` was replaced by the code from Teachable Machine that allowed it to run within opencv-python. The next part was ensuring that the probabilities of each class showed correctly within a numpy array; the highest probability needed to be chosen so that the user would have an output to the program and the user would have a choice of 'Rock', 'Paper', 'Scissors' or 'Nothing' which will compete with the computers choice from the manual version. 
+
+To ensure the highest probability was selected from the list:
+
+    user_index = np.argmax(prediction[0])
+    user_choice = user_options[user_index]
+
+This was then returned to the function of `get_winner()` to be compared with the computers choice.
+
+After this, a countdown was required to make sure the code doesn't take each frame as a new rock, paper or scissors from the user. To make sure the user had full control over when they wanted to begin the next round in the best of 5, the 'S' key was assigned to begin the countdown and is printed upon initialising the game to tell the user what key they need to press to start the countdown.
+
+Once the 'S' key was pressed it initiated flags to begin the countdown which was referenced with the `time.time()` function as shown below:
+
+    countdown = False
+    countdown_first = False
+    sec_3 = False
+    sec_2 = False
+    sec_1 = False
+
+        k = cv2.waitKey(1)
+        if k == ord('s'):
+            countdown = True
+            countdown_first = True
+            start_time = time.time()
+        if countdown is True and countdown_first is True:
+            print('Get your answer ready!')
+            countdown_first = False
+            sec_3 = True
+        elif sec_3 is True and (1.9 >= (time.time() - start_time) >= 1):
+            print('3')
+            sec_3 = False
+            sec_2 = True
+        elif sec_2 is True and (2.9 >= (time.time() - start_time) >= 2):
+            print('2')
+            sec_2 = False
+            sec_1 = True
+        elif sec_1 is True and (3.9 >= (time.time() - start_time) >= 3):
+            print('1')
+            sec_1 = False
+
+As shown, when the 'S' key is pressed, the countdown & countdown_first booleans were changed from `False` to `True`. As well as a snapshot of the time being taken and stored into the variable `start_time`. 
+
+THe first part of the if statement prints `Get your answer ready!` showing the user they need to begin to select one of the options required to play rock, paper, scissors. After this, the '3, 2, 1' was initiated, each part required a separate flag to become `True` in the previous statement, whilst within the statement itself, it turned the flag that was needed to `False` this meant that even if `time.time() - start_time` was in between the inequalities surrounding it twice, it would only print the number for the countdown once.
+
+Once the timer hit 1, the snapshot of the frame is taken and the output of rock, paper or scissors was used within `get_winner()`. 
+
+### Tying up the loose end
+If the user chose `Nothing` there was an if statement within `play(options)` that made sure it would not pick a computer choice if the user did not pick one of the verified rock, paper, scissors options:
+
+    user_choice = game.get_user_choice()
+    if user_choice == 'Nothing':
+        print('\nMake sure you pick an option!\n')
+    else:
+        computer_choice = game.get_computer_choice(options)
+        game.get_winner(user_choice, computer_choice)
