@@ -152,3 +152,9 @@ If the user chose `Nothing` there was an if statement within `play(options)` tha
     else:
         computer_choice = game.get_computer_choice(options)
         game.get_winner(user_choice, computer_choice)
+
+## Conclusion
+
+Throughout this project, I have refined my skills in Python, being able to successfully create a computer vision project from scratch independently through the `manual_rps.py` file as well as a minimum amount of help within the `cv_rps.py` file. I have got the understanding of how to input classes into Python as well as understanding the parameters and arguments within each function to ensure a seemless experience for anyone reading through to review the code, as well as feeling confident with my skills to learn new parts of code with ease such as the `time.time()` function.
+
+One thing I'd focus on to improve the code is to have more understanding around the cv2.putText to be able to display the countdown on the frame so the user can launch the project from the command line and not need to worry, as well as create an intuitive GUI so that the score & computers answer can be featured alongside the frame. Overall, I'm pleased with what I've created so far and will continue to try and understand the operations cv2 has for later use.
