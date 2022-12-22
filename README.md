@@ -7,7 +7,7 @@ Within the creation of this model, approximately 800 images was taken of my hand
 This will allow the model to correctly determine if the user of the program will be showing each of the four classes.
 
 ## Milestone 2 - Setting up the environment
-The model needed to be under certain environment criteria to be ran, therefore a new environment needed to be created using conda called 'cvrps', within this pip was installed to allow several python packages, the packages included are: opencv-python, tensorflow& ipykernel.
+The model needed to be under certain environment criteria to be ran, therefore a new environment needed to be created using conda called 'cvrps', within this pip was installed to allow several python packages, the packages included are: opencv-python, tensorflow & ipykernel.
 
 ## MIlestone 3 - Creating the manual Rock-Paper-Scissors game
 To be able to put it altogether with the model, a manual version of rock paper scissors was created within VSCode. This manual version included 3 key functions with a final added to put it altogether under a 'play' function.
